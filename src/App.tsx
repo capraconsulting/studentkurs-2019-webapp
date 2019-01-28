@@ -1,7 +1,9 @@
 import * as React from 'react';
 
-import getHelloWorldMessage from './services/hello-world-service';
+import EventFeed from './components/event-feed'
 
-const App = () => <h1>{getHelloWorldMessage(APP_NAME, APP_VERSION)}</h1>;
+import './styles/app.css'
+
+const App = () => <EventFeed/>;
 
 export default App;

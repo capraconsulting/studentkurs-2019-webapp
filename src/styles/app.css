@@ -1,0 +1,16 @@
+.event {
+    padding: 7px 10px;
+    margin: 0 15px 15px 0;
+    text-align: center;
+    background-color: lightblue;
+    width: 350px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .event-feed {
+    width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
