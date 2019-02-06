@@ -1,10 +1,22 @@
 import * as React from 'react';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 
 import { IEvent } from '../types'
 import { getEvents, addEvent } from '../services/event-service'
-import Event from './event'
+import Event from './Event'
+import EditEvent from './EditEvent'
 
-export default class EventFeed extends React.Component<any, any> {
+const styles = theme => ({
+    button: {
+      margin: theme.spacing.unit,
+    },
+    input: {
+      display: 'none',
+    },
+  });
+
+class EventFeed extends React.Component<any, any> {
     constructor(props: any){
         super(props);
         this.state = {
@@ -13,18 +25,13 @@ export default class EventFeed extends React.Component<any, any> {
         };
 
         this.onSave = this.onSave.bind(this)
-        this.onUpdateTitle = this.onUpdateTitle.bind(this)
     }
 
     private addEvent() {
         const newEvent : IEvent[] = [{
             title: "",
             description: "",
-            date: {
-                day: 0,
-                month: 0,
-                year: 0
-            },
+            date: new Date(),
             id: this.state.events.length + 1
         }]
 
@@ -42,36 +49,36 @@ export default class EventFeed extends React.Component<any, any> {
         }))
     }
 
-    private onUpdateTitle(title: string, event: IEvent) {
-        const newEvent = {
-            ...event,
-            title: title
-        }
-        this.setState(state => ({
-            events: state.events.filter(e => e.id != event.id).concat([newEvent])
-        }))
-    }
-
     private mapEventsToElements(events : IEvent[]) : JSX.Element[] {
         return events.map(event => (
-            <Event 
+            this.state.editing.indexOf(event.id) > -1 ?
+            <EditEvent 
                 event={event} 
-                editing={this.state.editing.indexOf(event.id) > -1}
                 key={event.id}
                 onSave={this.onSave}
-                onUpdateTitle={this.onUpdateTitle}
-                />))
+                />
+            :
+            <Event 
+                event={event} 
+                key={event.id}
+                />));
     }
+
+    private onClick = () => this.addEvent()
 
     public render() {
         return (
             <div className="event-feed">
-                <button className="add-event" onClick={() => this.addEvent()}>Add event</button>
+                <Button 
+                    variant="outlined" 
+                    className={this.props.classes.button} 
+                    onClick={this.onClick}> 
+                    Add event
+                </Button>
                 {this.mapEventsToElements(this.state.events)}
             </div>
         );
     }
 }
 
-
-
+export default withStyles(styles)(EventFeed)

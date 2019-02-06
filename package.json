@@ -10,7 +10,7 @@
     "test:watch": "jest src --watch",
     "test:e2e": "testcafe chrome e2e/tests/**/*.test.ts",
     "test:e2e:jenkins": "testcafe --app './scripts/serve-dist.sh' chrome:headless e2e/tests/**/*.test.ts",
-    "lint": "tslint -c tslint.json 'src/**/*.ts'"
+    "lint": "tslint -c tslint.json 'src/**/*.ts*'"
   },
   "license": "Apache-2.0",
   "devDependencies": {
@@ -40,6 +40,7 @@
     "webpack-merge": "4.2.1"
   },
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
     "react": "16.7.0",
     "react-dom": "16.7.0"
   }

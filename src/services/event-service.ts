@@ -1,25 +1,17 @@
 import { IEvent } from '../types'
 
 
-var events = [
+let events = [
         {
             title: "Fest hos Capra",
-            description: "Hyggelig kveld i godt lag",
-            date: {
-                day: 1,
-                month: 2,
-                year: 2019,
-            },
+            description: "Lorum ipsum og andre ripsbusker",
+            date: new Date("February 25, 2018"),
             id: 0,
         },
         {
             title: "Kurs med Abakus",
             description: "Veldig gøy for alle involverte",
-            date: {
-                day: 25,
-                month: 2,
-                year: 2019,
-            },
+            date: new Date("February 25, 2018"),
             id: 1,
         }
     ]
@@ -33,5 +25,5 @@ export function addEvent(event : IEvent) {
 }
 
 export function deleteEvent(event : IEvent) {
-    events = events.filter(temp => temp.id != event.id);
+    events = events.filter(temp => temp.id !== event.id);
 }

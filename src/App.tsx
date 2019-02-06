@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import EventFeed from './components/event-feed'
+import EventFeed from './components/EventFeed'
 
 import './styles/app.css'
 

@@ -1,26 +1,5 @@
-.event {
-    padding: 7px 10px;
-    margin: 0 15px 15px 0;
-    text-align: center;
-    background-color: lightblue;
-    width: 350px;
-    overflow: hidden;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .event-feed {
-    width: 360px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .add-event {
-    background-color: grey;
-    color: lightgray;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-  }
+.event-feed {
+  width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
