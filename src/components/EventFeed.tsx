@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles} from '@material-ui/core/styles';
 
 import { IEvent } from '../types'
-import { getEvents, addEvent } from '../services/event-service'
+import { getEvents, addEvent, deleteEvent } from '../services/event-service'
 import Event from './Event'
 import EditEvent from './EditEvent'
 
@@ -14,9 +14,16 @@ const styles = theme => ({
     input: {
       display: 'none',
     },
-  });
+});
 
-class EventFeed extends React.Component<any, any> {
+interface IState {
+    events: IEvent[],
+    editing: number[]
+}
+
+interface IProps extends WithStyles<typeof styles> {}
+
+class EventFeed extends React.Component<IProps, IState> {
     constructor(props: any){
         super(props);
         this.state = {
@@ -25,6 +32,7 @@ class EventFeed extends React.Component<any, any> {
         };
 
         this.onSave = this.onSave.bind(this)
+        this.onDelete = this.onDelete.bind(this)
     }
 
     private addEvent() {
@@ -49,6 +57,14 @@ class EventFeed extends React.Component<any, any> {
         }))
     }
 
+    private onDelete(event : IEvent) {
+        deleteEvent(event)
+        this.setState((state) => ({
+            events: getEvents(),
+            editing: [],
+        }))
+    }
+
     private mapEventsToElements(events : IEvent[]) : JSX.Element[] {
         return events.map(event => (
             this.state.editing.indexOf(event.id) > -1 ?
@@ -60,6 +76,7 @@ class EventFeed extends React.Component<any, any> {
             :
             <Event 
                 event={event} 
+                onDelete={this.onDelete}
                 key={event.id}
                 />));
     }
@@ -70,7 +87,8 @@ class EventFeed extends React.Component<any, any> {
         return (
             <div className="event-feed">
                 <Button 
-                    variant="outlined" 
+                    variant="contained" 
+                    color="primary"
                     className={this.props.classes.button} 
                     onClick={this.onClick}> 
                     Add event

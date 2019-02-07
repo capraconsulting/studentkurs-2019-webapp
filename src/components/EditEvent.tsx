@@ -2,6 +2,7 @@ import * as React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
@@ -10,7 +11,6 @@ import { IEvent } from '../types'
 const styles = {
     card: {
         minWidth: 275,
-        background: 'lightblue',
         padding: "7px 10px",
         margin: "0 15px 15px 0",
     },
@@ -91,12 +91,14 @@ class Event extends React.Component<IProps, IState> {
                         value={this.state.description}
                         onChange={this.handleChange('description')}
                         variant="filled"/>
+                </CardContent>
+                <CardActions>
                     <Button 
                         variant="outlined" 
                         onClick={this.onClick}>
                         Add
                     </Button>
-                </CardContent>
+                </CardActions>
             </Card>
         );
     }
