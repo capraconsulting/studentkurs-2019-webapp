@@ -1,6 +1,4 @@
-# Baseline for creating web apps
-
-[![Build Status](https://jenkins.capra.tv/buildStatus/icon?job=webapp-baseline/master)](https://jenkins.capra.tv/job/webapp-baseline/job/master/)
+# Studentkurs 2019 webapp
 
 Technologies:
 
@@ -12,3 +10,10 @@ Technologies:
 - TSLint
 - Prettier
 - Autoprefixer
+
+## Setup
+
+1. Install Node, webpack and Typescript
+2. `npm install`
+
+Run `npm start` to serve locally, or `npm run build` to build a bundle.
