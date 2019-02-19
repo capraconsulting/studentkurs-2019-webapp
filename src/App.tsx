@@ -1,8 +1,7 @@
 import * as React from 'react';
 
 import EventFeed from './components/EventFeed'
-
-import './styles/app.css'
+import './app.css'
 
 const App = () => <EventFeed/>;
 
