@@ -35,6 +35,9 @@ interface IProps extends WithStyles<typeof styles>{
 }
 
 function Event({ event, classes, onDelete } : IProps) {
+    const handleDelete = () => {
+        onDelete(event);
+    }
     return ( 
         <Card className={classes.card}>
             <CardContent>
@@ -45,7 +48,7 @@ function Event({ event, classes, onDelete } : IProps) {
             <CardActions>
                 <Button
                     color="secondary" 
-                    onClick={() => onDelete(event)}
+                    onClick={handleDelete}
                     variant="outlined">
                     Delete
                 </Button>

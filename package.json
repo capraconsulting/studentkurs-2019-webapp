@@ -1,43 +1,38 @@
 {
-  "name": "webapp-baseline",
+  "name": "studentkurs-2019-webapp",
   "version": "0.0.1",
-  "description": "Baseline for creating React+Typescript web apps",
+  "description": "React+TypeScript webapp for Studentkurs 2019",
   "main": "index.tsx",
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js -P",
-    "test": "jest src",
-    "test:watch": "jest src --watch",
     "lint": "tslint -c tslint.json 'src/**/*.ts*'"
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/jest": "23.3.13",
-    "@types/react": "16.7.20",
-    "@types/react-dom": "16.0.11",
-    "autoprefixer": "9.4.6",
+    "@types/react": "16.8.3",
+    "@types/react-dom": "16.8.2",
+    "autoprefixer": "9.4.7",
     "awesome-typescript-loader": "5.2.1",
     "clean-webpack-plugin": "1.0.1",
     "css-loader": "2.1.0",
     "html-webpack-plugin": "3.2.0",
-    "http-server": "0.11.1",
-    "jest": "23.6.0",
     "postcss-loader": "3.0.0",
+    "prettier": "1.16.4",
     "source-map-loader": "0.2.4",
     "style-loader": "0.23.1",
-    "ts-jest": "23.10.5",
     "tslint": "5.12.1",
-    "tslint-config-prettier": "1.17.0",
+    "tslint-config-prettier": "1.18.0",
     "tslint-react": "3.6.0",
-    "typescript": "3.2.4",
-    "webpack": "4.29.0",
-    "webpack-cli": "3.2.1",
+    "typescript": "3.3.3",
+    "webpack": "4.29.5",
+    "webpack-cli": "3.2.3",
     "webpack-dev-server": "3.1.14",
     "webpack-merge": "4.2.1"
   },
   "dependencies": {
-    "@material-ui/core": "^3.9.2",
-    "react": "16.7.0",
-    "react-dom": "16.7.0"
+    "@material-ui/core": "3.9.2",
+    "react": "16.8.2",
+    "react-dom": "16.8.2"
   }
 }
