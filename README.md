@@ -3,7 +3,7 @@
 Made with ReactJS and TypeScript, more info found at:
 
 1. [ReactJS tutorial](https://reactjs.org/tutorial/tutorial.html)
-2. TypeScript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+2. [TypeScript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
 
 ## Setup
 
