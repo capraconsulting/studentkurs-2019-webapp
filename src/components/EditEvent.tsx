@@ -38,28 +38,30 @@ interface IProps {
 interface IState {
   description: string,
   title: string,
-  date: string
+  url: string,
+  date: string,
 }
 
 class Event extends React.Component<IProps, IState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      description: this.props.event.description,
-      title: this.props.event.title,
-      date: this.props.event.date.toDateString()
+      description: props.event.description,
+      title: props.event.title,
+      url: props.event.url,
+      date: props.event.date.toDateString(),
     };
   }
 
-  private handleChange = (name: keyof IState) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  private handleChange = () => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = event.target;
     this.setState({
-      [name]: event.target.value,
+      [name]: value,
     } as Pick<IState, keyof IState>);
   };
 
   private onClick = () => this.props.onSave({
-    description: this.state.description,
-    title: this.state.title,
+    ...this.state,
     date: new Date(this.state.date),
     id: this.props.event.id,
   });
@@ -72,15 +74,27 @@ class Event extends React.Component<IProps, IState> {
             className={this.props.classes.textArea}
             label="Title"
             value={this.state.title}
-            onChange={this.handleChange('title')}
-            variant="filled"/>
+            name="title"
+            onChange={this.handleChange()}
+            variant="filled"
+          />
+          <TextField
+            className={this.props.classes.textArea}
+            label="Image URL"
+            value={this.state.url}
+            name="url"
+            onChange={this.handleChange()}
+            variant="filled"
+          />
           <TextField
             className={this.props.classes.textArea}
             label="Date"
             value={this.state.date}
-            onChange={this.handleChange('date')}
+            name="date"
+            onChange={this.handleChange()}
             type="date"
-            variant="filled"/>
+            variant="filled"
+          />
           <TextField
             className={this.props.classes.textArea}
             id="standard-multiline-static"
@@ -89,14 +103,16 @@ class Event extends React.Component<IProps, IState> {
             rows="2"
             rowsMax="8"
             value={this.state.description}
-            onChange={this.handleChange('description')}
-            variant="filled"/>
+            name="description"
+            onChange={this.handleChange()}
+            variant="filled"
+          />
         </CardContent>
         <CardActions>
           <Button
             variant="outlined"
             onClick={this.onClick}>
-            Add
+            Save
           </Button>
         </CardActions>
       </Card>
