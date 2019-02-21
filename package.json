@@ -32,7 +32,9 @@
   },
   "dependencies": {
     "@material-ui/core": "3.9.2",
+    "axios": "^0.18.0",
     "react": "16.8.2",
-    "react-dom": "16.8.2"
+    "react-dom": "16.8.2",
+    "uuid": "^3.3.2"
   }
 }

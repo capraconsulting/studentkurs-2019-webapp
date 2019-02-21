@@ -3,5 +3,5 @@ export interface IEvent {
   url: string;
   date: Date;
   description: string;
-  id: number;
+  id: string;
 }

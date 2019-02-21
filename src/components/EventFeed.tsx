@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
+import {withStyles, WithStyles} from '@material-ui/core/styles';
 
-import { IEvent } from '../types';
+import {IEvent} from '../types';
 import {
   getEvents,
   addEvent,
@@ -23,11 +23,12 @@ const styles = theme => ({
 
 interface IState {
   events: IEvent[];
-  eventsBeingEdited: number[];
-  eventsBeingCreated: number[];
+  eventsBeingEdited: string[];
+  eventBeingCreated?: IEvent;
 }
 
-interface IProps extends WithStyles<typeof styles> {}
+interface IProps extends WithStyles<typeof styles> {
+}
 
 class EventFeed extends React.Component<IProps, IState> {
   constructor(props: any) {
@@ -36,13 +37,14 @@ class EventFeed extends React.Component<IProps, IState> {
     this.state = {
       events: [],
       eventsBeingEdited: [],
-      eventsBeingCreated: []
+      eventBeingCreated: undefined
     };
 
     this.onSave = this.onSave.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.onStartEdit = this.onStartEdit.bind(this);
+    this.onCancelEdit = this.onCancelEdit.bind(this);
     this.addEvent = this.addEvent.bind(this);
   }
 
@@ -59,24 +61,21 @@ class EventFeed extends React.Component<IProps, IState> {
       title: '',
       description: '',
       date: new Date(),
-      id: this.state.events.length + 1,
+      id: 'tempId',
       url: ''
     };
 
-    this.setState(state => ({
-      events: [newEvent, ...state.events],
-      eventsBeingCreated: [...state.eventsBeingCreated, newEvent.id]
-    }));
+    this.setState({
+      eventBeingCreated: newEvent,
+    });
   }
 
   private onSave(event: IEvent) {
     addEvent(event)
-      .then(() => {
+      .then((e) => {
         this.setState(state => ({
-          events: state.events.map(e => (e.id === event.id ? event : e)),
-          eventsBeingCreated: state.eventsBeingCreated.filter(
-            id => id !== event.id
-          )
+          events: [e, ...state.events],
+          eventBeingCreated: undefined,
         }));
       })
       .catch(err => {
@@ -105,6 +104,20 @@ class EventFeed extends React.Component<IProps, IState> {
     }));
   }
 
+  private onCancelEdit(id?: string) {
+    if (id === "tempId") {
+      this.setState({
+        eventBeingCreated: undefined,
+      });
+    } else {
+      this.setState(state => ({
+        eventsBeingEdited: state.eventsBeingEdited.filter(
+          i => i !== id
+        )
+      }));
+    }
+  }
+
   private onDelete(event: IEvent) {
     deleteEvent(event)
       .then(() => {
@@ -122,17 +135,12 @@ class EventFeed extends React.Component<IProps, IState> {
 
   private mapEventsToElements(events: IEvent[]): JSX.Element[] {
     return events.map(event =>
-      this.state.eventsBeingCreated.includes(event.id) ? (
+      this.state.eventsBeingEdited.includes(event.id) ? (
         <EditEvent
           event={event}
-          key={`@{event.id}-create`}
-          onSave={this.onSave}
-        />
-      ) : this.state.eventsBeingEdited.includes(event.id) ? (
-        <EditEvent
-          event={event}
-          key={`@{event.id}-edit`}
+          key={event.id}
           onSave={this.onEdit}
+          onCancel={this.onCancelEdit}
         />
       ) : (
         <Event
@@ -148,14 +156,22 @@ class EventFeed extends React.Component<IProps, IState> {
   public render() {
     return (
       <div className="event-feed">
-        <Button
-          variant="contained"
-          color="primary"
-          className={this.props.classes.button}
-          onClick={this.addEvent}
-        >
-          Add event
-        </Button>
+        {this.state.eventBeingCreated ?
+          <EditEvent
+            event={this.state.eventBeingCreated}
+            onSave={this.onSave}
+            onCancel={this.onCancelEdit}
+          />
+          :
+          <Button
+            variant="contained"
+            color="primary"
+            className={this.props.classes.button}
+            onClick={this.addEvent}
+          >
+            Add event
+          </Button>
+        }
         {this.mapEventsToElements(this.state.events)}
       </div>
     );

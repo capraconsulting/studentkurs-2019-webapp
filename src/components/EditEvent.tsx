@@ -32,6 +32,7 @@ const styles = {
 interface IProps {
   event: IEvent;
   onSave: (event: IEvent) => void;
+  onCancel: (id: string) => void;
   classes: any;
 }
 
@@ -59,6 +60,9 @@ class Event extends React.Component<IProps, IState> {
       [name]: value
     } as Pick<IState, keyof IState>);
   };
+
+  private onCancel = () =>
+    this.props.onCancel(this.props.event.id);
 
   private onClick = () =>
     this.props.onSave({
@@ -112,6 +116,9 @@ class Event extends React.Component<IProps, IState> {
         <CardActions>
           <Button variant="outlined" onClick={this.onClick}>
             Save
+          </Button>
+          <Button variant="outlined" onClick={this.onCancel}>
+            Cancel
           </Button>
         </CardActions>
       </Card>
