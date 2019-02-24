@@ -114,7 +114,7 @@ class Event extends React.Component<IProps, IState> {
             variant="filled"
           />
         </CardContent>
-        <CardActions>
+        <CardActions className="action-container">
           <Button variant="outlined" color="primary" onClick={this.onClick}>
             <SaveIcon className={this.props.classes.rightIcon} />
             Save

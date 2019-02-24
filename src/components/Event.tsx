@@ -29,7 +29,7 @@ const styles = {
   textArea: {
     padding: '7px 10px',
     margin: '0 15px 15px 0'
-  }
+  },
 };
 
 interface IProps extends WithStyles<typeof styles> {
@@ -59,7 +59,7 @@ function Event({event, classes, onDelete, onEdit}: IProps) {
           {event.description}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions className="action-container">
         <Button onClick={handleEdit} variant="outlined">
           <EditIcon className={classes.rightIcon}/>
           Edit
