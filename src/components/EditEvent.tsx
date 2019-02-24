@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import SaveIcon from '@material-ui/icons/Save';
 
 import { IEvent } from '../types';
 
@@ -114,10 +115,11 @@ class Event extends React.Component<IProps, IState> {
           />
         </CardContent>
         <CardActions>
-          <Button variant="outlined" onClick={this.onClick}>
+          <Button variant="outlined" color="primary" onClick={this.onClick}>
+            <SaveIcon className={this.props.classes.rightIcon} />
             Save
           </Button>
-          <Button variant="outlined" onClick={this.onCancel}>
+          <Button variant="outlined" color="secondary" onClick={this.onCancel}>
             Cancel
           </Button>
         </CardActions>

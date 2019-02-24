@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
+import {withStyles, WithStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Icon from '@material-ui/core/Icon';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-import { IEvent } from '../types';
+import {IEvent} from '../types';
 
 const styles = {
   card: {
@@ -33,9 +36,10 @@ interface IProps extends WithStyles<typeof styles> {
   event: IEvent;
   onDelete: (event: IEvent) => void;
   onEdit: (event: IEvent) => void;
+  classes: any;
 }
 
-function Event({ event, classes, onDelete, onEdit }: IProps) {
+function Event({event, classes, onDelete, onEdit}: IProps) {
   const handleEdit = () => {
     onEdit(event);
   };
@@ -46,7 +50,7 @@ function Event({ event, classes, onDelete, onEdit }: IProps) {
   return (
     <Card className={classes.card}>
       <CardContent>
-        <img src={event.url} alt="event logo" />
+        <img src={event.url} alt="event logo"/>
         <Typography className={classes.title}>{event.title}</Typography>
         <Typography className={classes.date}>
           {event.date.toDateString()}
@@ -56,10 +60,12 @@ function Event({ event, classes, onDelete, onEdit }: IProps) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button color="secondary" onClick={handleEdit} variant="outlined">
+        <Button onClick={handleEdit} variant="outlined">
+          <EditIcon className={classes.rightIcon}/>
           Edit
         </Button>
         <Button color="secondary" onClick={handleDelete} variant="outlined">
+          <DeleteIcon className={classes.rightIcon}/>
           Delete
         </Button>
       </CardActions>

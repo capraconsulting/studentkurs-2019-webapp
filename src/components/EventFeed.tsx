@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import {withStyles, WithStyles} from '@material-ui/core/styles';
 
 import {IEvent} from '../types';
@@ -169,6 +170,7 @@ class EventFeed extends React.Component<IProps, IState> {
             className={this.props.classes.button}
             onClick={this.addEvent}
           >
+            <AddIcon />
             Add event
           </Button>
         }
