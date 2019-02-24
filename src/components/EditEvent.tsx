@@ -50,7 +50,7 @@ class Event extends React.Component<IProps, IState> {
       description: props.event.description,
       title: props.event.title,
       url: props.event.url,
-      date: props.event.date.toDateString()
+      date: props.event.date.toJSON().slice(0,10),
     };
   }
 
