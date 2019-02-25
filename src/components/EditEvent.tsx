@@ -57,15 +57,14 @@ function Event({ classes, event, onCancel, onSave }: IProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === 'description') {
-      setDescription(value);
-    } else if (name === 'title') {
-      setTitle(value);
-    } else if (name === 'url') {
-      setUrl(value);
-    } else if (name === 'date') {
-      setDate(value);
-    }
+    const updateFn = {
+      description: setDescription,
+      title: setTitle,
+      url: setUrl,
+      date: setDate
+    }[name];
+
+    updateFn(value);
   };
 
   const handleCancel = () => onCancel(event.id);
