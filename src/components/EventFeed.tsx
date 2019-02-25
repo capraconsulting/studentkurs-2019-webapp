@@ -45,7 +45,7 @@ class EventFeed extends React.Component<IProps, IState> {
     this.onEdit = this.onEdit.bind(this);
     this.onStartEdit = this.onStartEdit.bind(this);
     this.onCancelEdit = this.onCancelEdit.bind(this);
-    this.addEvent = this.addEvent.bind(this);
+    this.addInitialEventData = this.addInitialEventData.bind(this);
   }
 
   public componentDidMount() {
@@ -56,7 +56,7 @@ class EventFeed extends React.Component<IProps, IState> {
     });
   }
 
-  private addEvent() {
+  private addInitialEventData() {
     const newEvent: IEvent = {
       id: 'tempId',
       data: {
@@ -167,7 +167,7 @@ class EventFeed extends React.Component<IProps, IState> {
             variant="contained"
             color="primary"
             className={this.props.classes.button}
-            onClick={this.addEvent}
+            onClick={this.addInitialEventData}
           >
             <AddIcon />
             Add event
