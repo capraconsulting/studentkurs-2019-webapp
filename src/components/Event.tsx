@@ -39,10 +39,10 @@ interface IProps extends WithStyles<typeof styles> {
 }
 
 function Event({ event, classes, onDelete, onEdit }: IProps) {
-  const handleEdit = () => {
+  const handleEdit = (e: React.MouseEvent<HTMLElement>): void => {
     onEdit(event);
   };
-  const handleDelete = () => {
+  const handleDelete = (e: React.MouseEvent<HTMLElement>): void => {
     onDelete(event);
   };
 
