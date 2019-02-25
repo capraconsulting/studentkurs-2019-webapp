@@ -37,9 +37,15 @@ interface IProps {
   classes: any;
 }
 
+function withPadding(value: number): string {
+  return value < 10 ? `0${value}` : '' + value;
+}
+
 function getDate(event: IEvent): string {
   const date = event.data.date ? new Date(event.data.date) : new Date();
-  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+  return `${date.getFullYear()}-${withPadding(date.getMonth())}-${withPadding(
+    date.getDate()
+  )}`;
 }
 
 function Event({ classes, event, onCancel, onSave }: IProps) {
