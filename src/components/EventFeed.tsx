@@ -80,8 +80,8 @@ class EventFeed extends React.Component<IProps, IState> {
           eventBeingCreated: undefined
         }));
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.error(error);
       });
   }
 
@@ -95,8 +95,8 @@ class EventFeed extends React.Component<IProps, IState> {
           )
         }));
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.error(error);
       });
   }
 
@@ -128,8 +128,8 @@ class EventFeed extends React.Component<IProps, IState> {
           )
         }));
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.error(error);
       });
   }
 
