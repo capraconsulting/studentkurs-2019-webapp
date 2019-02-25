@@ -45,10 +45,7 @@ interface IState {
 }
 
 function getDate(event: IEvent): string {
-  const date =
-    event.data.date && event.data.date.constructor === Date
-      ? event.data.date
-      : new Date();
+  const date = event.data.date ? new Date(event.data.date) : new Date();
   return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 }
 
@@ -76,7 +73,7 @@ class Event extends React.Component<IProps, IState> {
     this.props.onSave({
       data: {
         ...this.state,
-        date: new Date(this.state.date)
+        date: new Date(this.state.date).toISOString()
       },
       id: this.props.event.id
     });

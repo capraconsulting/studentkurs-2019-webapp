@@ -62,7 +62,7 @@ class EventFeed extends React.Component<IProps, IState> {
       data: {
         title: '',
         description: '',
-        date: new Date(),
+        date: new Date().toISOString(),
         url: ''
       }
     };

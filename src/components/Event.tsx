@@ -50,12 +50,14 @@ function Event({ event, classes, onDelete, onEdit }: IProps) {
     <Card className={classes.card}>
       <CardContent>
         <img src={event.data.url} alt="event logo" />
-        <Typography className={classes.title}>{event.data.title}</Typography>
+        <Typography className={classes.title}>
+          {event.data.title || 'Ingen tittel satt'}
+        </Typography>
         <Typography className={classes.date}>
-          {event.data.date ? event.data.date.toDateString() : 'Ingen dato satt'}
+          {event.data.date || 'Ingen dato satt'}
         </Typography>
         <Typography className={classes.description}>
-          {event.data.description}
+          {event.data.description || 'Ingen beskrivelse satt'}
         </Typography>
       </CardContent>
       <CardActions className="action-container">

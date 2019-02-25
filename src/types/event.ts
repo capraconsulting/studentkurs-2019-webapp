@@ -4,8 +4,8 @@ export interface IEvent {
 }
 
 export interface IEventData {
-  title: string;
-  url: string;
-  date: Date;
-  description: string;
+  title?: string;
+  url?: string;
+  date?: string;
+  description?: string;
 }
