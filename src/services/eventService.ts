@@ -36,7 +36,7 @@ export const getEvents = async () => {
 };
 
 export const editEvent = async (event: IEvent) => {
-  // return axios.put(`https://URL/events/${event.id}`, event)
+  // return axios.put(`https://URL/events/${event.id}`, event.data)
   //   .then(res => {
   //     console.log(res);
   //     console.log(res.data);
@@ -54,7 +54,7 @@ export const editEvent = async (event: IEvent) => {
 };
 
 export const addEvent = async (event: IEvent) => {
-  // return axios.post(`https://URL/events`, event)
+  // return axios.post(`https://URL/events`, event.data)
   //   .then(res => {
   //     console.log(res);
   //     console.log(res.data);
