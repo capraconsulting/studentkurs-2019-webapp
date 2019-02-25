@@ -22,41 +22,24 @@ const styles = theme => ({
   }
 });
 
-interface IState {
-  events: IEvent[];
-  eventsBeingEdited: string[];
-  eventBeingCreated?: IEvent;
-}
-
 interface IProps extends WithStyles<typeof styles> {}
 
-class EventFeed extends React.Component<IProps, IState> {
-  constructor(props: any) {
-    super(props);
+function EventFeed({ classes }: IProps) {
+  const [events, setEvents] = React.useState([] as IEvent[]);
+  const [eventsBeingEdited, setEventsBeingEdited] = React.useState(
+    [] as string[]
+  );
+  const [eventBeingCreated, setEventBeingCreated] = React.useState(
+    null as IEvent | null
+  );
 
-    this.state = {
-      events: [],
-      eventsBeingEdited: [],
-      eventBeingCreated: undefined
-    };
-
-    this.onSave = this.onSave.bind(this);
-    this.onDelete = this.onDelete.bind(this);
-    this.onEdit = this.onEdit.bind(this);
-    this.onStartEdit = this.onStartEdit.bind(this);
-    this.onCancelEdit = this.onCancelEdit.bind(this);
-    this.addInitialEventData = this.addInitialEventData.bind(this);
-  }
-
-  public componentDidMount() {
-    getEvents().then((events: IEvent[]) => {
-      this.setState({
-        events
-      });
+  React.useEffect(() => {
+    getEvents().then((eventsResponse: IEvent[]) => {
+      setEvents(eventsResponse);
     });
-  }
+  }, []);
 
-  private addInitialEventData() {
+  const addInitialEventData = () => {
     const newEvent: IEvent = {
       id: 'tempId',
       data: {
@@ -67,116 +50,99 @@ class EventFeed extends React.Component<IProps, IState> {
       }
     };
 
-    this.setState({
-      eventBeingCreated: newEvent
-    });
-  }
+    setEventBeingCreated(newEvent);
+  };
 
-  private onSave(event: IEvent) {
+  const onSave = (event: IEvent) => {
     addEvent(event)
       .then(e => {
-        this.setState(state => ({
-          events: [e, ...state.events],
-          eventBeingCreated: undefined
-        }));
+        setEvents([...events, e]);
+        setEventBeingCreated(null);
       })
       .catch(error => {
         console.error(error);
       });
-  }
+  };
 
-  private onEdit(event: IEvent) {
+  const onEdit = (event: IEvent) => {
     editEvent(event)
       .then(() => {
-        this.setState(state => ({
-          events: state.events.map(e => (e.id === event.id ? event : e)),
-          eventsBeingEdited: state.eventsBeingEdited.filter(
-            id => id !== event.id
-          )
-        }));
+        setEvents([...events.map(e => (e.id === event.id ? event : e))]);
+        setEventsBeingEdited([
+          ...eventsBeingEdited.filter(id => id !== event.id)
+        ]);
       })
       .catch(error => {
         console.error(error);
       });
-  }
+  };
 
-  private onStartEdit(event: IEvent) {
-    this.setState(state => ({
-      eventsBeingEdited: [...state.eventsBeingEdited, event.id]
-    }));
-  }
+  const onStartEdit = (event: IEvent) => {
+    setEventsBeingEdited([...eventsBeingEdited, event.id]);
+  };
 
-  private onCancelEdit(id?: string) {
+  const onCancelEdit = (id?: string) => {
     if (id === 'tempId') {
-      this.setState({
-        eventBeingCreated: undefined
-      });
+      setEventBeingCreated(null);
     } else {
-      this.setState(state => ({
-        eventsBeingEdited: state.eventsBeingEdited.filter(i => i !== id)
-      }));
+      setEventsBeingEdited([...eventsBeingEdited.filter(i => i !== id)]);
     }
-  }
+  };
 
-  private onDelete(event: IEvent) {
+  const onDelete = (event: IEvent) => {
     deleteEvent(event)
       .then(() => {
-        this.setState(state => ({
-          events: state.events.filter(e => e.id !== event.id),
-          eventsBeingEdited: state.eventsBeingEdited.filter(
-            id => id !== event.id
-          )
-        }));
+        setEvents([...events.filter(e => e.id !== event.id)]);
+        setEventsBeingEdited([
+          ...eventsBeingEdited.filter(id => id !== event.id)
+        ]);
       })
       .catch(error => {
         console.error(error);
       });
-  }
+  };
 
-  private mapEventsToElements(events: IEvent[]): JSX.Element[] {
-    return events.map(event =>
-      this.state.eventsBeingEdited.includes(event.id) ? (
+  const renderEvents = (): JSX.Element[] =>
+    events.map(event =>
+      eventsBeingEdited.includes(event.id) ? (
         <EditEvent
           event={event}
           key={event.id}
-          onSave={this.onEdit}
-          onCancel={this.onCancelEdit}
+          onSave={onEdit}
+          onCancel={onCancelEdit}
         />
       ) : (
         <Event
           event={event}
-          onDelete={this.onDelete}
-          onEdit={this.onStartEdit}
+          onDelete={onDelete}
+          onEdit={onStartEdit}
           key={event.id}
         />
       )
     );
-  }
 
-  public render() {
-    return (
-      <div className="event-feed">
-        {this.state.eventBeingCreated ? (
-          <EditEvent
-            event={this.state.eventBeingCreated}
-            onSave={this.onSave}
-            onCancel={this.onCancelEdit}
-          />
-        ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            className={this.props.classes.button}
-            onClick={this.addInitialEventData}
-          >
-            <AddIcon />
-            Add event
-          </Button>
-        )}
-        {this.mapEventsToElements(this.state.events)}
-      </div>
-    );
-  }
+  return (
+    <div className="event-feed">
+      {eventBeingCreated ? (
+        <EditEvent
+          event={eventBeingCreated}
+          onSave={onSave}
+          onCancel={onCancelEdit}
+        />
+      ) : (
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          onClick={addInitialEventData}
+        >
+          <AddIcon />
+          Add event
+        </Button>
+      )}
+      {renderEvents()}
+    </div>
+  );
 }
 
 export default withStyles(styles)(EventFeed);
