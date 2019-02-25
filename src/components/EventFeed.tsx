@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import {withStyles, WithStyles} from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 
-import {IEvent} from '../types';
+import { IEvent } from '../types';
 import {
   getEvents,
   addEvent,
@@ -28,8 +28,7 @@ interface IState {
   eventBeingCreated?: IEvent;
 }
 
-interface IProps extends WithStyles<typeof styles> {
-}
+interface IProps extends WithStyles<typeof styles> {}
 
 class EventFeed extends React.Component<IProps, IState> {
   constructor(props: any) {
@@ -59,24 +58,26 @@ class EventFeed extends React.Component<IProps, IState> {
 
   private addEvent() {
     const newEvent: IEvent = {
-      title: '',
-      description: '',
-      date: new Date(),
       id: 'tempId',
-      url: ''
+      data: {
+        title: '',
+        description: '',
+        date: new Date(),
+        url: ''
+      }
     };
 
     this.setState({
-      eventBeingCreated: newEvent,
+      eventBeingCreated: newEvent
     });
   }
 
   private onSave(event: IEvent) {
     addEvent(event)
-      .then((e) => {
+      .then(e => {
         this.setState(state => ({
           events: [e, ...state.events],
-          eventBeingCreated: undefined,
+          eventBeingCreated: undefined
         }));
       })
       .catch(err => {
@@ -106,15 +107,13 @@ class EventFeed extends React.Component<IProps, IState> {
   }
 
   private onCancelEdit(id?: string) {
-    if (id === "tempId") {
+    if (id === 'tempId') {
       this.setState({
-        eventBeingCreated: undefined,
+        eventBeingCreated: undefined
       });
     } else {
       this.setState(state => ({
-        eventsBeingEdited: state.eventsBeingEdited.filter(
-          i => i !== id
-        )
+        eventsBeingEdited: state.eventsBeingEdited.filter(i => i !== id)
       }));
     }
   }
@@ -157,13 +156,13 @@ class EventFeed extends React.Component<IProps, IState> {
   public render() {
     return (
       <div className="event-feed">
-        {this.state.eventBeingCreated ?
+        {this.state.eventBeingCreated ? (
           <EditEvent
             event={this.state.eventBeingCreated}
             onSave={this.onSave}
             onCancel={this.onCancelEdit}
           />
-          :
+        ) : (
           <Button
             variant="contained"
             color="primary"
@@ -173,7 +172,7 @@ class EventFeed extends React.Component<IProps, IState> {
             <AddIcon />
             Add event
           </Button>
-        }
+        )}
         {this.mapEventsToElements(this.state.events)}
       </div>
     );

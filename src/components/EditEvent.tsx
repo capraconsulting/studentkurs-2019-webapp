@@ -48,10 +48,10 @@ class Event extends React.Component<IProps, IState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      description: props.event.description,
-      title: props.event.title,
-      url: props.event.url,
-      date: props.event.date.toJSON().slice(0,10),
+      description: props.event.data.description,
+      title: props.event.data.title,
+      url: props.event.data.url,
+      date: props.event.data.date.toJSON().slice(0, 10)
     };
   }
 
@@ -62,13 +62,14 @@ class Event extends React.Component<IProps, IState> {
     } as Pick<IState, keyof IState>);
   };
 
-  private onCancel = () =>
-    this.props.onCancel(this.props.event.id);
+  private onCancel = () => this.props.onCancel(this.props.event.id);
 
   private onClick = () =>
     this.props.onSave({
-      ...this.state,
-      date: new Date(this.state.date),
+      data: {
+        ...this.state,
+        date: new Date(this.state.date)
+      },
       id: this.props.event.id
     });
 
