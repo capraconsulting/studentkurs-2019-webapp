@@ -49,89 +49,91 @@ function getDate(event: IEvent): string {
   return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 }
 
-class Event extends React.Component<IProps, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      description: props.event.data.description,
-      title: props.event.data.title,
-      url: props.event.data.url,
-      date: getDate(props.event)
-    };
-  }
+function Event({ classes, event, onCancel, onSave }: IProps) {
+  const [description, setDescription] = React.useState(event.data.description);
+  const [title, setTitle] = React.useState(event.data.title);
+  const [url, setUrl] = React.useState(event.data.url);
+  const [date, setDate] = React.useState(getDate(event));
 
-  private handleChange = () => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    } as Pick<IState, keyof IState>);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'description') {
+      setDescription(value);
+    } else if (name === 'title') {
+      setTitle(value);
+    } else if (name === 'url') {
+      setUrl(value);
+    } else if (name === 'date') {
+      setDate(value);
+    }
   };
 
-  private onCancel = () => this.props.onCancel(this.props.event.id);
+  const handleCancel = () => onCancel(event.id);
 
-  private onClick = () =>
-    this.props.onSave({
+  const onClick = () =>
+    onSave({
       data: {
-        ...this.state,
-        date: new Date(this.state.date).toISOString()
+        title,
+        description,
+        url,
+        date: new Date(date).toISOString()
       },
-      id: this.props.event.id
+      id: event.id
     });
 
-  public render() {
-    return (
-      <Card className={this.props.classes.card}>
-        <CardContent>
-          <TextField
-            className={this.props.classes.textArea}
-            label="Title"
-            value={this.state.title}
-            name="title"
-            onChange={this.handleChange()}
-            variant="filled"
-          />
-          <TextField
-            className={this.props.classes.textArea}
-            label="Image URL"
-            value={this.state.url}
-            name="url"
-            onChange={this.handleChange()}
-            variant="filled"
-          />
-          <TextField
-            className={this.props.classes.textArea}
-            label="Date"
-            value={this.state.date}
-            name="date"
-            onChange={this.handleChange()}
-            type="date"
-            variant="filled"
-          />
-          <TextField
-            className={this.props.classes.textArea}
-            id="standard-multiline-static"
-            label="Description"
-            multiline={true}
-            rows="2"
-            rowsMax="8"
-            value={this.state.description}
-            name="description"
-            onChange={this.handleChange()}
-            variant="filled"
-          />
-        </CardContent>
-        <CardActions className="action-container">
-          <Button variant="outlined" color="primary" onClick={this.onClick}>
-            <SaveIcon className={this.props.classes.rightIcon} />
-            Save
-          </Button>
-          <Button variant="outlined" color="secondary" onClick={this.onCancel}>
-            Cancel
-          </Button>
-        </CardActions>
-      </Card>
-    );
-  }
+  return (
+    <Card className={classes.card}>
+      <CardContent>
+        <TextField
+          className={classes.textArea}
+          label="Title"
+          value={title}
+          name="title"
+          onChange={handleChange}
+          variant="filled"
+        />
+        <TextField
+          className={classes.textArea}
+          label="Image URL"
+          value={url}
+          name="url"
+          onChange={handleChange}
+          variant="filled"
+        />
+        <TextField
+          className={classes.textArea}
+          label="Date"
+          value={date}
+          name="date"
+          onChange={handleChange}
+          type="date"
+          variant="filled"
+        />
+        <TextField
+          className={classes.textArea}
+          id="standard-multiline-static"
+          label="Description"
+          multiline={true}
+          rows="2"
+          rowsMax="8"
+          value={description}
+          name="description"
+          onChange={handleChange}
+          variant="filled"
+        />
+      </CardContent>
+
+      <CardActions className="action-container">
+        <Button variant="outlined" color="primary" onClick={onClick}>
+          <SaveIcon className={classes.rightIcon} />
+          Save
+        </Button>
+        <Button variant="outlined" color="secondary" onClick={handleCancel}>
+          Cancel
+        </Button>
+      </CardActions>
+    </Card>
+  );
 }
 
 export default withStyles(styles)(Event);
