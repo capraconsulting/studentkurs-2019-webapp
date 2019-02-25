@@ -37,13 +37,6 @@ interface IProps {
   classes: any;
 }
 
-interface IState {
-  description: string;
-  title: string;
-  url: string;
-  date: string;
-}
-
 function getDate(event: IEvent): string {
   const date = event.data.date ? new Date(event.data.date) : new Date();
   return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
@@ -55,7 +48,7 @@ function Event({ classes, event, onCancel, onSave }: IProps) {
   const [url, setUrl] = React.useState(event.data.url);
   const [date, setDate] = React.useState(getDate(event));
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     const updateFn = {
       description: setDescription,
@@ -67,9 +60,11 @@ function Event({ classes, event, onCancel, onSave }: IProps) {
     updateFn(value);
   };
 
-  const handleCancel = () => onCancel(event.id);
+  const handleCancel = (e: React.MouseEvent<HTMLElement>): void => {
+    onCancel(event.id);
+  };
 
-  const onClick = () =>
+  const onClick = (e: React.MouseEvent<HTMLElement>): void => {
     onSave({
       data: {
         title,
@@ -79,6 +74,7 @@ function Event({ classes, event, onCancel, onSave }: IProps) {
       },
       id: event.id
     });
+  };
 
   return (
     <Card className={classes.card}>
