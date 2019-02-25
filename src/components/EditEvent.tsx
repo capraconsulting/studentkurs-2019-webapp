@@ -43,9 +43,9 @@ function withPadding(value: number): string {
 
 function getDate(event: IEvent): string {
   const date = event.data.date ? new Date(event.data.date) : new Date();
-  return `${date.getFullYear()}-${withPadding(date.getMonth())}-${withPadding(
-    date.getDate()
-  )}`;
+  return `${date.getFullYear()}-${withPadding(
+    date.getMonth() + 1
+  )}-${withPadding(date.getDate())}`;
 }
 
 function Event({ classes, event, onCancel, onSave }: IProps) {
