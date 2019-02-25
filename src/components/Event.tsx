@@ -52,7 +52,7 @@ function Event({ event, classes, onDelete, onEdit }: IProps) {
         <img src={event.data.url} alt="event logo" />
         <Typography className={classes.title}>{event.data.title}</Typography>
         <Typography className={classes.date}>
-          {event.data.date.toDateString()}
+          {event.data.date ? event.data.date.toDateString() : 'Ingen dato satt'}
         </Typography>
         <Typography className={classes.description}>
           {event.data.description}

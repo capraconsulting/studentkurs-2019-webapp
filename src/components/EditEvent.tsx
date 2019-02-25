@@ -44,6 +44,14 @@ interface IState {
   date: string;
 }
 
+function getDate(event: IEvent): string {
+  const date =
+    event.data.date && event.data.date.constructor === Date
+      ? event.data.date
+      : new Date();
+  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+}
+
 class Event extends React.Component<IProps, IState> {
   constructor(props: any) {
     super(props);
@@ -51,7 +59,7 @@ class Event extends React.Component<IProps, IState> {
       description: props.event.data.description,
       title: props.event.data.title,
       url: props.event.data.url,
-      date: props.event.data.date.toJSON().slice(0, 10)
+      date: getDate(props.event)
     };
   }
 
